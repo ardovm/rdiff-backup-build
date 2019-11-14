@@ -26,6 +26,7 @@ if "--help" in sys.argv:
 if len(sys.argv) > 1:
     version = sys.argv[1]
 else:
+    sys.path.append(os.path.abspath(os.path.join(".", "rdiff-backup", "src")))
     from rdiff_backup.Version import version
 # Compilation of librsync
 librsyncBinDir = os.path.abspath("librsync-bin")
@@ -47,8 +48,8 @@ os.putenv("LIBRSYNC_DIR", librsyncBinDir)
 runCommand(sys.executable, "setup.py", "build")
 os.chdir("build")
 PyInstaller.__main__.run(["--onefile",
-                          "--distpath=%s" % os.path.join("..", "dist", "win32"),
-                          "--paths=%s" % os.path.join("build", "lib.win32-3.7"),
+                          "--distpath=%s" % os.path.abspath(os.path.join("..", "dist", "win32")),
+                          "--paths=%s" % os.path.abspath("lib.win32-3.7"),
                           "--paths=%s" % os.path.join(librsyncBinDir, "bin"),
                           "--paths=%s" % os.path.join(librsyncBinDir, "lib"),
                           "--console", os.path.join("scripts-3.7", "rdiff-backup")])
