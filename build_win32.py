@@ -44,12 +44,15 @@ if "VS160COMNTOOLS" not in os.environ:
 os.putenv("LIBRSYNC_DIR", librsyncBinDir)
 runCommand(sys.executable, "setup.py", "build")
 os.chdir("build")
+strVersion = "%s.%s" % (sys.version_info.major, sys.version_info.minor)
 PyInstaller.__main__.run(["--onefile",
                           "--distpath=%s" % os.path.abspath(os.path.join("..", "dist", "win32")),
-                          "--paths=%s" % os.path.abspath("lib.win32-3.7"),
+                          "--paths=%s" % os.path.abspath("lib.win32-%s" %
+                                                         strVersion),
                           "--paths=%s" % os.path.join(librsyncBinDir, "bin"),
                           "--paths=%s" % os.path.join(librsyncBinDir, "lib"),
-                          "--console", os.path.join("scripts-3.7", "rdiff-backup")])
+                          "--console", os.path.join("scripts-%s" % strVersion,
+                                                    "rdiff-backup")])
 os.chdir("..")
 
 # Packaging of rdiff-backup
