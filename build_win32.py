@@ -38,9 +38,6 @@ runCommand("cmake", "--install", ".", "--config", "Release")
 os.chdir("..")
 # Build of rdiff-backup
 os.chdir("rdiff-backup")
-runCommand(sys.executable, os.path.join(".", "tools", "makedist"), "--no-tar",
-           version)
-os.chdir("rdiff-backup-%s" % version)
 if "VS160COMNTOOLS" not in os.environ:
     sys.stderr.write("VS160COMNTOOLS environment variable not set.\n")
     sys.exit(1)
@@ -56,7 +53,7 @@ PyInstaller.__main__.run(["--onefile",
 os.chdir("..")
 
 # Packaging of rdiff-backup
-with zipfile.ZipFile(os.path.join("..", "..",
+with zipfile.ZipFile(os.path.join("..",
                                   "rdiff-backup-%s.zip" % version), "w",
                      zipfile.ZIP_DEFLATED) as z:
     # All files under directory dist
@@ -65,5 +62,9 @@ with zipfile.ZipFile(os.path.join("..", "..",
         if os.path.isfile(fWithPath):
             z.write(fWithPath, f)
     # Doc files (list taken from setup.py)
-    for f in ['CHANGELOG', 'COPYING', 'README.md', 'FAQ.md', 'examples.md', 'DEVELOP.md']:
+    for f in ['CHANGELOG', 'COPYING', 'README.md',
+              os.path.join("docs", "FAQ.md"),
+              os.path.join("docs", "examples.md"),
+              os.path.join("docs", "DEVELOP.md"),
+              os.path.join("docs", "Windows-README.md")]:
         z.write(f, f)
