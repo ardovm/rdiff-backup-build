@@ -8,7 +8,7 @@ import os
 import os.path
 import shutil
 import subprocess
-import zipfile
+import tarfile
 import PyInstaller.__main__
 
 def runCommand(*args):
@@ -55,19 +55,18 @@ PyInstaller.__main__.run(["--onefile",
 os.chdir("..")
 
 # Packaging of rdiff-backup
-with zipfile.ZipFile(os.path.join("..",
-                                  "rdiff-backup-%s.zip" % version), "w",
-                     zipfile.ZIP_DEFLATED) as z:
+base="rdiff-backup-%s" % version
+with tarfile.open(os.path.join("..", "%s.tar.gz" % base), "w:gz") as z:
     # All files under directory dist
     for f in os.listdir(os.path.join("dist", sys.platform)):
         fWithPath = os.path.join("dist", sys.platform, f)
         if os.path.isfile(fWithPath):
-            z.write(fWithPath, f)
+            z.add(fWithPath, os.path.join(base, f))
     # Doc files (list taken from setup.py)
     for f in ['CHANGELOG', 'COPYING', 'README.md',
               os.path.join("docs", "FAQ.md"),
               os.path.join("docs", "examples.md"),
               os.path.join("docs", "DEVELOP.md"),
               os.path.join("docs", "Windows-README.md")]:
-        z.write(f, f)
+        z.add(f, os.path.join(base, f))
 
