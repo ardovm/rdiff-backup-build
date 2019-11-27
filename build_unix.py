@@ -27,8 +27,8 @@ if "--help" in sys.argv:
 if len(sys.argv) > 1:
     version = sys.argv[1]
 else:
-    sys.path.append(os.path.abspath(os.path.join(".", "rdiff-backup", "src")))
-    from rdiff_backup.Version import version
+    import setuptools_scm
+    version = setuptools_scm.get_version(root="rdiff-backup")
 # Compilation of librsync
 librsyncBinDir = os.path.abspath("librsync-bin")
 os.chdir("librsync")
