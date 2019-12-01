@@ -51,6 +51,11 @@ PyInstaller.__main__.run(["--onefile",
                                                          strVersion),
                           "--paths=%s" % os.path.join(librsyncBinDir, "bin"),
                           "--paths=%s" % os.path.join(librsyncBinDir, "lib"),
+                          "--add-data=%s;%s" %
+                          (os.path.abspath(os.path.join("..", "src",
+                                                        "rdiff_backup.egg-info",
+                                                        "PKG-INFO")),
+                           "rdiff_backup.egg-info"),
                           "--console", os.path.join("scripts-%s" % strVersion,
                                                     "rdiff-backup")])
 os.chdir("..")
