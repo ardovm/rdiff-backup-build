@@ -39,7 +39,7 @@ os.chdir("..")
 # Build of rdiff-backup
 os.chdir("rdiff-backup")
 os.putenv("LIBRSYNC_DIR", librsyncBinDir)
-runCommand(sys.executable, "setup.py", "build")
+runCommand(sys.executable, "setup.py", "bdist")
 os.chdir("build")
 strVersion = "%s.%s" % (sys.version_info.major, sys.version_info.minor)
 PyInstaller.__main__.run(["--onefile",
