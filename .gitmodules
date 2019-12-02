@@ -1,7 +1,6 @@
 [submodule "rdiff-backup"]
 	path = rdiff-backup
-	url = https://github.com/ardovm/rdiff-backup.git
-	branch = makedist
+	url = https://github.com/rdiff-backup/rdiff-backup.git
 [submodule "librsync"]
 	path = librsync
 	url = https://github.com/librsync/librsync
